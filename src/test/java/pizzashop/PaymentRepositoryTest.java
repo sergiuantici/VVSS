@@ -115,72 +115,76 @@ public class PaymentRepositoryTest {
         return payments;
     }
 
+    @Test
+    @Order(1)
+    @Timeout(2)
+    @Tag("BVA")
+    @DisplayName("BVA_TC1")
+    public void addPayment_BVA_TC1() {
+        int numberOfEntities = paymentRepository.getAll().size();
+        int table = 1;
+        PaymentType paymentType = PaymentType.Card;
+        double amount = 500;
+        pizzaService.addPayment(table, paymentType, amount);
+        assertEquals(paymentRepository.getAll().size(), numberOfEntities + 1);
+    }
 
+    @Test
+    @Order(2)
+    @Timeout(2)
+    @Tag("BVA")
+    @DisplayName("BVA_TC2")
+    public void addPayment_BVA_TC2() {
+        int numberOfEntities = paymentRepository.getAll().size();
+        int table = 0;
+        PaymentType paymentType = PaymentType.Card;
+        double amount = 500;
+        try {
+            pizzaService.addPayment(table, paymentType, amount);
+        } catch (RuntimeException exception) {
+            assertEquals(exception.getMessage(), "Error - invalid table!");
+        }
+        assertEquals(paymentRepository.getAll().size(), numberOfEntities);
+    }
 
-//    @Test
-//    @Order(1)
-//    @Timeout(2)
-//    @DisplayName("addPaymentSuccessful test for addPayment() method from PizzaService that pass (1)")
-//    public void addPaymentSuccessful() {
-//        int numberOfEntities = paymentRepository.getAll().size();
-//        int table = 1;
-//        PaymentType paymentType = PaymentType.Card;
-//        double amount = 500;
-//        pizzaService.addPayment(table, paymentType, amount);
-//        assertEquals(paymentRepository.getAll().size(), numberOfEntities + 1);
-//    }
-//
-//    @Test
-//    @Order(2)
-//    @Timeout(2)
-//    @DisplayName("addPaymentSuccessful test for addPayment() method from PizzaService that fails (1)")
-//    public void addPaymentUnsuccessful() {
-//        int numberOfEntities = paymentRepository.getAll().size();
-//        int table = 0;
-//        PaymentType paymentType = PaymentType.Card;
-//        double amount = 500;
-//        try {
-//            pizzaService.addPayment(table, paymentType, amount);
-//        } catch (RuntimeException exception) {
-//            assertEquals(exception.getMessage(), "Error - invalid table!");
-//        }
-//        assertEquals(paymentRepository.getAll().size(), numberOfEntities);
-//    }
-//
-//    @Test
-//    @Order(3)
-//    @Timeout(2)
-//    @DisplayName("addPaymentSuccessful test for addPayment() method from PizzaService that pass (2)")
-//    public void addPaymentSuccessfulSecond() {
-//        int numberOfEntities = paymentRepository.getAll().size();
-//        int table = 7;
-//        PaymentType paymentType = PaymentType.Cash;
-//        double amount = 20;
-//        pizzaService.addPayment(table, paymentType, amount);
-//        assertEquals(paymentRepository.getAll().size(), numberOfEntities + 1);
-//    }
-//
-//    @Test
-//    @Order(4)
-//    @Timeout(2)
-//    @DisplayName("addPaymentSuccessful test for addPayment() method from PizzaService that fails (2)")
-//    public void addPaymentUnsuccessfulSecond() {
-//        int numberOfEntities = paymentRepository.getAll().size();
-//        int table = 2;
-//        PaymentType paymentType = PaymentType.Card;
-//        double amount = -20;
-//        try {
-//            pizzaService.addPayment(table, paymentType, amount);
-//        } catch (RuntimeException exception) {
-//            assertEquals(exception.getMessage(), "Error - invalid amount!");
-//        }
-//        assertEquals(paymentRepository.getAll().size(), numberOfEntities);
-//    }
-//
-//    @Test
-//    @Order(5)
-//    @Timeout(2)
-//    @Disabled
-//    public void addPaymentSuccessfulThird() {
-//    }
+    @Test
+    @Order(3)
+    @Timeout(2)
+    @Tag("BVA")
+    @DisplayName("BVA_TC3")
+    public void addPayment_BVA_TC3() {
+        int numberOfEntities = paymentRepository.getAll().size();
+        int table = 7;
+        PaymentType paymentType = PaymentType.Cash;
+        double amount = 20;
+        pizzaService.addPayment(table, paymentType, amount);
+        assertEquals(paymentRepository.getAll().size(), numberOfEntities + 1);
+    }
+
+    @Test
+    @Order(4)
+    @Timeout(2)
+    @Tag("BVA")
+    @DisplayName("BVA_TC4")
+    public void addPayment_BVA_TC4() {
+        int numberOfEntities = paymentRepository.getAll().size();
+        int table = 2;
+        PaymentType paymentType = PaymentType.Card;
+        double amount = -0.01;
+        try {
+            pizzaService.addPayment(table, paymentType, amount);
+        } catch (RuntimeException exception) {
+            assertEquals(exception.getMessage(), "Error - invalid amount!");
+        }
+        assertEquals(paymentRepository.getAll().size(), numberOfEntities);
+    }
+
+    @Test
+    @Order(5)
+    @Timeout(2)
+    @Disabled
+    @Tag("BVA")
+    @DisplayName("Disable test BVA_TC5")
+    public void addPayment_BVA_TC5() {
+    }
 }
