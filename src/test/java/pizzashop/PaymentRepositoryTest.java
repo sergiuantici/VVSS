@@ -187,4 +187,52 @@ public class PaymentRepositoryTest {
     @DisplayName("Disable test BVA_TC5")
     public void addPayment_BVA_TC5() {
     }
+
+
+    @Test
+    @Order(1)
+    @Timeout(2)
+    @DisplayName("FC02_TC01")
+    public void getTotalAmount_FC02_TC01() {
+        double result = pizzaService.getTotalAmount(PaymentType.Cash, new ArrayList<>());
+        assertEquals(0, result);
+    }
+
+    @Test
+    @Order(2)
+    @Timeout(2)
+    @DisplayName("FC02_TC02")
+    public void getTotalAmount_FC02_TC02() {
+        double result = pizzaService.getTotalAmount(PaymentType.Cash, null);
+        assertEquals(0, result);
+    }
+
+    @Test
+    @Order(3)
+    @Timeout(2)
+    @DisplayName("FC02_TC03")
+    public void getTotalAmount_FC02_TC03() {
+        Payment paymentObj = new Payment(1, PaymentType.Cash, 25);
+        double result = pizzaService.getTotalAmount(PaymentType.Cash, List.of(paymentObj));
+        assertEquals(25, result);
+    }
+
+    @Test
+    @Order(4)
+    @Timeout(2)
+    @DisplayName("FC02_TC04")
+    public void getTotalAmount_FC02_TC04() {
+        Payment object1 = new Payment(1, PaymentType.Cash, 25);
+        double result = pizzaService.getTotalAmount(PaymentType.Card, List.of(object1));
+        assertEquals(0, result);
+    }
+
+    @Test
+    @Order(5)
+    @Timeout(2)
+    @DisplayName("FC02_Invalid")
+    public void getTotalAmount_FC02_Invalid() {
+        Payment object1 = null;
+        assertThrows(NullPointerException.class, () -> pizzaService.getTotalAmount(PaymentType.Cash, List.of(object1)));
+    }
 }
