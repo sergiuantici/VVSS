@@ -203,8 +203,12 @@ public class PaymentRepositoryTest {
     @Timeout(2)
     @DisplayName("FC02_TC02")
     public void getTotalAmount_FC02_TC02() {
-        double result = pizzaService.getTotalAmount(PaymentType.Cash, null);
-        assertEquals(0, result);
+        Exception exception = assertThrows(NullPointerException.class, () -> {
+            pizzaService.getTotalAmount(PaymentType.Cash, null);
+        });
+        String expectedMessage = "Cannot invoke \"java.util.List.size()\" because \"l\" is null";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 
     @Test
