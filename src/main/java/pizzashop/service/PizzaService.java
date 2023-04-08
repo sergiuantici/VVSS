@@ -43,16 +43,15 @@ public class PizzaService {
         payRepo.add(payment);
     }
 
-    public double getTotalAmount(PaymentType type) {
+    public double getTotalAmount(PaymentType type, List<Payment> l) {
         double total = 0.0f;
-        List<Payment> l = getPayments();
         if(l.size() == 0)
         {
-            total = 0.0;
+            total = 0.0f;
         }
         else if(l == null)
         {
-            total = 0.0;
+            total = 0.0f;
         }
         else {
             for (Payment p : l) {
