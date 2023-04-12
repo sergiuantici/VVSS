@@ -39,6 +39,7 @@ public class PaymentRepositoryTest {
                 fail();
     }
 
+    @Test
     @Order(1)
     @Timeout(5)
     @Tag("ECP")
